@@ -10,7 +10,8 @@
 }
 
 .header__left {
-  flex: 0.5;
+  flex: 0.6;
+  min-width: 70px;
   display: flex;
   background-color: white;
   padding: 10px;
@@ -26,4 +27,8 @@
 
 .header__right > h4 {
   margin-left: 10px;
+}
+
+input:focus {
+  outline: none;
 }
