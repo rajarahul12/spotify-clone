@@ -1,6 +1,6 @@
 # SPOTIFY CONTROLLER
 
-A Spotify controller app created using React.js and Firebase that allows playback control of songs playing on other device
+A Spotify controller app created using React.js and Firebase that allows playback control of songs playing on another device
 
 ## Hosted on Firebase
 
