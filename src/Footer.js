@@ -12,11 +12,9 @@ import { Grid, Slider } from "@material-ui/core";
 import { useDataLayerValue } from "./DataLayer";
 
 function Footer({ spotify }) {
-  const [{ token, item, playing }, dispatch] = useDataLayerValue();
+  const [{ item, playing }, dispatch] = useDataLayerValue();
   useEffect(() => {
     spotify.getMyCurrentPlaybackState().then((r) => {
-      console.log(r);
-
       dispatch({
         type: "SET_PLAYING",
         playing: r.is_playing,
@@ -27,6 +25,7 @@ function Footer({ spotify }) {
         item: r.item,
       });
     });
+    // eslint-disable-next-line
   }, [spotify]);
 
   const handlePlayPause = () => {
@@ -46,44 +45,43 @@ function Footer({ spotify }) {
   };
 
   const skipNext = () => {
-    console.log("skipnext");
     spotify.skipToNext();
 
     setTimeout(() => {
       spotify.getMyCurrentPlayingTrack().then((r) => {
-        console.log("ITEM : delay ", r.item);
+        console.log("ITEM : ", r.item);
+        dispatch({
+          type: "SET_ITEM",
+          item: r.item,
+        });
+        dispatch({
+          type: "SET_PLAYING",
+          playing: true,
+        });
       });
-    }, 2000);
-    spotify.getMyCurrentPlayingTrack().then((r) => {
-      console.log("ITEM : ", r.item);
-      dispatch({
-        type: "SET_ITEM",
-        item: r.item,
-      });
-      dispatch({
-        type: "SET_PLAYING",
-        playing: true,
-      });
-    });
+    }, 1000);
   };
 
   const skipPrevious = () => {
     spotify.skipToPrevious();
-    spotify.getMyCurrentPlayingTrack().then((r) => {
-      dispatch({
-        type: "SET_ITEM",
-        item: r.item,
+    setTimeout(() => {
+      spotify.getMyCurrentPlayingTrack().then((r) => {
+        dispatch({
+          type: "SET_ITEM",
+          item: r.item,
+        });
+        dispatch({
+          type: "SET_PLAYING",
+          playing: true,
+        });
       });
-      dispatch({
-        type: "SET_PLAYING",
-        playing: true,
-      });
-    });
+    }, 1000);
   };
 
   return (
     <div className="footer">
       <div className="footer__left">
+        {/* eslint-disable-next-line */}
         <img
           className="footer__albumLogo"
           src={item?.album.images[0].url}
@@ -104,7 +102,7 @@ function Footer({ spotify }) {
 
       <div className="footer__center">
         <ShuffleIcon className="footer__green" />
-        <SkipPreviousIcon onClick={skipNext} className="footer__icon" />
+        <SkipPreviousIcon onClick={skipPrevious} className="footer__icon" />
         {playing ? (
           <PauseCircleOutlineIcon
             onClick={handlePlayPause}
@@ -118,7 +116,7 @@ function Footer({ spotify }) {
             className="footer__icon"
           />
         )}
-        <SkipNextIcon onClick={skipPrevious} className="footer__icon" />
+        <SkipNextIcon onClick={skipNext} className="footer__icon" />
         <RepeatIcon className="footer__green" />
       </div>
       <div className="footer__right">

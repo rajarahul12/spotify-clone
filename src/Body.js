@@ -53,13 +53,21 @@ function Body({ spotify }) {
       <Header spotify={spotify} />
 
       <div className="body__info">
-        <img
-          src="https://cdn.shortpixel.ai/client/q_lossy,ret_img,w_377/https://www.hypebot.com/wp-content/uploads/2020/07/discover-weekly.png"
-          alt=""
-        />
+        {discover_weekly?.name.includes("Discover Weekly") ? (
+          <img
+            src="https://cdn.shortpixel.ai/client/q_lossy,ret_img,w_377/https://www.hypebot.com/wp-content/uploads/2020/07/discover-weekly.png"
+            alt="Discover Weekly"
+          />
+        ) : (
+          <img src={discover_weekly?.images[0].url} alt="" />
+        )}
         <div className="body__infoText">
           <strong>PLAYLIST</strong>
-          <h2>Discover Weekly</h2>
+          {discover_weekly?.name ? (
+            <h2>{discover_weekly.name}</h2>
+          ) : (
+            <h2>DISCOVER WEEKLY</h2>
+          )}
           <p>{discover_weekly?.description}</p>
         </div>
       </div>
@@ -75,7 +83,7 @@ function Body({ spotify }) {
         </div>
 
         {discover_weekly?.tracks.items.map((item) => (
-          <SongRow playSong={playSong} track={item.track} />
+          <SongRow key={item.track.id} playSong={playSong} track={item.track} />
         ))}
       </div>
     </div>
