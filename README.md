@@ -18,7 +18,7 @@ Live Demo - [Click here](https://image-gallery-react.web.app/)
 
 ### Player Page
 
-<img src="./screenshots/upload.png" width="100%" height="100%"/>
+<img src="./screenshots/player.png" width="100%" height="100%"/>
 
 ## To run locally
 
